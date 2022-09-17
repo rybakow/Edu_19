@@ -19,6 +19,6 @@ public class PlayerInput : MonoBehaviour
         
         playerController.Run(horizontal);
         playerController.Jump(jumpPressed);
-        //playerController.PrimaryAttack(primaryAttackPressed);
+        playerController.PrimaryAttack(primaryAttackPressed);
     }
 }

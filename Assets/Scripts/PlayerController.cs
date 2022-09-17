@@ -12,11 +12,10 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
 
-    private bool onGround;
-    
-    public Transform groundCheck;
-    public float checkRadius = 0.5f;
-    public LayerMask ground;
+    public CheckGround groundController;
+    public bool onGround = true;
+
+    public GameObject bomb;
     
     private void Start()
     {
@@ -27,10 +26,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckingGround();
+        onGround = groundController.onGround;
     }
-
-
+    
     public void Run(float horizontal)
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
@@ -45,18 +43,20 @@ public class PlayerController : MonoBehaviour
     {
         if (jumpPressed && onGround)
         {
-            Debug.Log("Jump");
             rb.velocity = new Vector2(rb.velocity.x, Vector2.up.y * jumpPower);
+            anim.SetTrigger("Jump");
+            groundController.onGround = false;
         }
     }
     
-    private void CheckingGround()
+    public void PrimaryAttack(bool primaryAttackPressed)
     {
-        onGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, ground);
+        if (primaryAttackPressed)
+        {
+            GameObject newBomb = Instantiate(bomb, transform.position, Quaternion.identity);
+            newBomb.SetActive(true);
+        }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log(collision.gameObject.name + " " + collision.gameObject.layer);
-    }
+    
+    
 }
