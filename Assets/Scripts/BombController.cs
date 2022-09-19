@@ -30,7 +30,7 @@ public class BombController : MonoBehaviour
     {
         anim.SetTrigger("Boom");
         bomb.enabled = true;
-        bombDamageController.takeDamage(transform);
+        bombDamageController.takeDamage(this.transform);
     }
 
     public void destroyBomb()

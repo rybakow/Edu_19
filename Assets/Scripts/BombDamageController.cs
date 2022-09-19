@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,36 +9,39 @@ public class BombDamageController : MonoBehaviour
     public int damage;
     public LayerMask mask;
 
-    private GameObject lastBomb;
-
-
+    private List<GameObject> damagedObjects = new List<GameObject>();
+    
     public void takeDamage(Transform epicenter)
     {
-        List<DamageableList> listOfDamageable = getCollidersInCircle(epicenter);
+        Collider2D[] listOfDamageable = getCollidersInCircle(epicenter);
 
-        for (int i = 0; i < listOfDamageable.Count; i++)
+        for (int i = 0; i < listOfDamageable.Length; i++)
         {
-            Debug.Log("damageableObject = " + listOfDamageable[i].damageableObject.name + " " + "bombObject = " + listOfDamageable[i].bombObject.name + " lastBomb = " + lastBomb.name);
-            if (listOfDamageable[i].bombObject != lastBomb)
+            GameObject damagedObject = listOfDamageable[i].gameObject;
+            
+            if (!damagedObjects.Contains(damagedObject))
             {
-                listOfDamageable[i].damageableObject.GetComponent<Health>().CauseDamage(damage);
-                //listOfDamageable[i].bombObject = epicenter.gameObject;
+                try
+                {
+                    damagedObject.GetComponent<PlayerHealth>().CauseDamage(damage);
+                    damagedObjects.Add(damagedObject);
+                }
+                catch (Exception e)
+                {
+                    damagedObject.GetComponent<AnyHealth>().CauseDamage(damage);
+                }
+      
+                damagedObjects.Add(damagedObject);
             }
         }
     }
     
-    
-    private List<DamageableList> getCollidersInCircle(Transform epicenter)
+    private Collider2D[] getCollidersInCircle(Transform epicenter)
     {
-        lastBomb = epicenter.gameObject;
         Collider2D[] arrayOfDamagedObjects = Physics2D.OverlapCircleAll(epicenter.position, raduisOfDamage, mask);
-        List<DamageableList> result = new List<DamageableList>();
-
-        for (int i = 0; i < arrayOfDamagedObjects.Length; i++)
-            result.Add(new DamageableList(arrayOfDamagedObjects[i].gameObject, epicenter.gameObject));
         
-        return result;
+        return arrayOfDamagedObjects;
     }
-    
+
 
 }

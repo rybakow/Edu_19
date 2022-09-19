@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 50;
-    public HealthBar healthBar;
+    [SerializeField] private int maxHealth;
+    public PlayerHealthBar playerHealthBar;
     public int currentHealth;
     private bool isALive;
     
@@ -13,13 +13,13 @@ public class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         isALive = true;
-        //healthBar.SetMaxHealth(maxHealth);
+        playerHealthBar.SetMaxHealth(maxHealth);
     }
 
     public void CauseDamage(int damage)
     {
         currentHealth -= damage;
-        healthBar.SetHealth(currentHealth);
+        playerHealthBar.SetHealth(currentHealth);
         
         isALive = currentHealth > 0 ? true : false;
     }
