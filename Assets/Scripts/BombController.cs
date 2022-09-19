@@ -9,13 +9,15 @@ public class BombController : MonoBehaviour
     [SerializeField] private PointEffector2D bomb;
     private Animator anim;
     private float currentTime;
+    private BombDamageController bombDamageController;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        bombDamageController = GetComponent<BombDamageController>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         currentTime += Time.deltaTime;
 
@@ -28,6 +30,7 @@ public class BombController : MonoBehaviour
     {
         anim.SetTrigger("Boom");
         bomb.enabled = true;
+        bombDamageController.takeDamage(transform);
     }
 
     public void destroyBomb()

@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public bool onGround = true;
 
     public GameObject bomb;
+
+    private int count;
     
     private void Start()
     {
@@ -54,6 +56,8 @@ public class PlayerController : MonoBehaviour
         if (primaryAttackPressed)
         {
             GameObject newBomb = Instantiate(bomb, transform.position, Quaternion.identity);
+            count += 1;
+            newBomb.name += count.ToString();
             newBomb.SetActive(true);
         }
     }

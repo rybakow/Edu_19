@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         isALive = true;
-        healthBar.SetMaxHealth(maxHealth);
+        //healthBar.SetMaxHealth(maxHealth);
     }
 
     public void CauseDamage(int damage)
