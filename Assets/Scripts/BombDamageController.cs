@@ -29,6 +29,7 @@ public class BombDamageController : MonoBehaviour
                 catch (Exception e)
                 {
                     damagedObject.GetComponent<AnyHealth>().CauseDamage(damage);
+                    Debug.Log(e);
                 }
       
                 damagedObjects.Add(damagedObject);

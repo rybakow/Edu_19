@@ -39,6 +39,11 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = true;
         else
             spriteRenderer.flipX = false;
+
+        if (Mathf.Abs(rb.velocity.x) > 0)
+            anim.SetBool("isRunning", true);
+        else
+            anim.SetBool("isRunning", false);
     }
 
     public void Jump(bool jumpPressed)
@@ -46,9 +51,10 @@ public class PlayerController : MonoBehaviour
         if (jumpPressed && onGround)
         {
             rb.velocity = new Vector2(rb.velocity.x, Vector2.up.y * jumpPower);
-            anim.SetTrigger("Jump");
             groundController.onGround = false;
         }
+        
+        anim.SetBool("isJumping", !onGround);
     }
     
     public void PrimaryAttack(bool primaryAttackPressed)
@@ -61,6 +67,14 @@ public class PlayerController : MonoBehaviour
             newBomb.SetActive(true);
         }
     }
-    
-    
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Door"))
+        {
+            Debug.Log("Door");
+            anim.SetTrigger("DoorIn");
+        }
+            
+    }
 }

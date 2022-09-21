@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [SerializeField] private Animator anim;
     [SerializeField] private int maxHealth;
     public PlayerHealthBar playerHealthBar;
     public int currentHealth;
@@ -22,5 +23,10 @@ public class PlayerHealth : MonoBehaviour
         playerHealthBar.SetHealth(currentHealth);
         
         isALive = currentHealth > 0 ? true : false;
+
+        if (isALive)
+            anim.SetTrigger("Hit");
+        else
+            anim.SetTrigger("Dead");
     }
 }
