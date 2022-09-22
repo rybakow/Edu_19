@@ -12,7 +12,11 @@ public class PirateController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
 
-    private float prevXpostion;
+    private float currentTime;
+    private float lastPosition;
+
+    [SerializeField] private GameObject firstPoint;
+    [SerializeField] private GameObject secondPoint;
 
     private void Awake()
     {
@@ -24,7 +28,16 @@ public class PirateController : MonoBehaviour
     void FixedUpdate()
     {
         Run();
+
+        currentTime += Time.deltaTime;
+
+        if (currentTime >= 7f)
+        {
+            Jump();
+            currentTime = 0f;
+        }
     }
+    
 
     private void Run()
     {
@@ -34,18 +47,6 @@ public class PirateController : MonoBehaviour
             anim.SetBool("isRunning", true);
         else
             anim.SetBool("isRunning", false);
-
-        
-        if (prevXpostion == transform.position.x)
-        {
-            Debug.Log("velocity: " + rb.velocity + " and " + prevXpostion + " and " + transform.position.x);
-            speed *= -1;
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-            Jump();
-        }
-            
-        
-        prevXpostion = transform.position.x;
     }
 
     private void Jump()
@@ -56,7 +57,21 @@ public class PirateController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("Ground"))
-            if (!collision.gameObject.CompareTag("Player"))
-                Jump();
+            Jump();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("ReturnPoint"))
+            TurnAround();
+        
+        if (collider.CompareTag("JumpPad"))
+            Jump();
+    }
+
+    private void TurnAround()
+    {
+        speed *= -1;
+        spriteRenderer.flipX = !spriteRenderer.flipX;
     }
 }
