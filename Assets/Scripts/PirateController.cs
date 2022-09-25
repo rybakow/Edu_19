@@ -15,8 +15,7 @@ public class PirateController : MonoBehaviour
     private float currentTime;
     private float lastPosition;
 
-    [SerializeField] private GameObject firstPoint;
-    [SerializeField] private GameObject secondPoint;
+    public Transform target;
 
     private void Awake()
     {
@@ -30,18 +29,21 @@ public class PirateController : MonoBehaviour
         Run();
 
         currentTime += Time.deltaTime;
-
+        
         if (currentTime >= 7f)
         {
             Jump();
             currentTime = 0f;
         }
+        
     }
     
-
     private void Run()
     {
-        rb.velocity = new Vector2( speed, rb.velocity.y);
+        if (target != null)
+            TurnAround(false, target.position.x - transform.position.x);
+
+        rb.velocity = new Vector2(speed, rb.velocity.y);
         
         if (Mathf.Abs(rb.velocity.x) > 0)
             anim.SetBool("isRunning", true);
@@ -63,15 +65,37 @@ public class PirateController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("ReturnPoint"))
-            TurnAround();
-        
+            TurnAround(true);
+
         if (collider.CompareTag("JumpPad"))
             Jump();
     }
-
-    private void TurnAround()
+    
+    private void TurnAround(bool isTurnPoint, float directionDelta = 0f)
     {
-        speed *= -1;
-        spriteRenderer.flipX = !spriteRenderer.flipX;
+        if (isTurnPoint)
+        {
+            speed *= -1;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+        }
+        else
+        {
+            if (directionDelta > 0)
+            {
+                speed = 1;
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                speed = -1;
+                spriteRenderer.flipX = true;
+            }  
+        }
+            
+    }
+    
+    public void StopAttack()
+    {
+        anim.SetBool("isAttacking", false);
     }
 }

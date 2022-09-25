@@ -24,8 +24,7 @@ public class BombController : MonoBehaviour
         if (currentTime >= timeToExploison)
             Boom();
     }
-
-
+    
     private void Boom()
     {
         anim.SetTrigger("Boom");

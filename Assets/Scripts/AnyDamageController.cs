@@ -3,29 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombDamageController : MonoBehaviour
+public class AnyDamageController : MonoBehaviour
 {
     public float raduisOfDamage;
     public int damage;
     public LayerMask mask;
 
     private List<GameObject> damagedObjects = new List<GameObject>();
+
+    public float timeToClearDamagedObjects;
+    private float currentTime;
     
     public void takeDamage(Transform epicenter)
     {
         Collider2D[] listOfDamageable = getCollidersInCircle(epicenter);
-
+        
         for (int i = 0; i < listOfDamageable.Length; i++)
         {
             GameObject damagedObject = listOfDamageable[i].gameObject;
             
-            if (!damagedObjects.Contains(damagedObject))
+            if (!damagedObjects.Contains(damagedObject) && damagedObject.CompareTag("Player")) 
             {
-                if (damagedObject.CompareTag("Player"))
-                    damagedObject.GetComponent<PlayerHealth>().CauseDamage(damage);
-                else if (damagedObject.CompareTag("EnemyCharacter"))
-                    damagedObject.GetComponent<AnyHealth>().CauseDamage(damage);
-                
+                damagedObject.GetComponent<PlayerHealth>().CauseDamage(damage);
                 damagedObjects.Add(damagedObject);
             }
         }
@@ -38,5 +37,11 @@ public class BombDamageController : MonoBehaviour
         return arrayOfDamagedObjects;
     }
 
-
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+        
+        if (currentTime >= timeToClearDamagedObjects)
+            damagedObjects.Clear();
+    }
 }
