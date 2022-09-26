@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PirateController : MonoBehaviour
@@ -97,5 +98,10 @@ public class PirateController : MonoBehaviour
     public void StopAttack()
     {
         anim.SetBool("isAttacking", false);
+    }
+
+    public void DestroyCharacter()
+    {
+        Destroy(this.transform.parent.gameObject);
     }
 }
