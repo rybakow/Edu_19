@@ -18,6 +18,8 @@ public class CucumberController : MonoBehaviour
 
     private int count;
     
+    // new one
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
