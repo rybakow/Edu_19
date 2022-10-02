@@ -6,16 +6,17 @@ using UnityEngine;
 public class ViewRangeController : MonoBehaviour
 {
    public GameObject observableObject;
-   private PirateController characterController;
+   private EnemyCharacterController characterController;
 
    private void Awake()
    {
-      characterController = observableObject.GetComponent<PirateController>();
+      characterController = observableObject.GetComponent<EnemyCharacterController>();
    }
 
    private void FixedUpdate()
    {
-      transform.position = observableObject.transform.position;
+      if (observableObject)
+         transform.position = observableObject.transform.position;
    }
 
    private void OnTriggerEnter2D(Collider2D collider)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
-public class PirateController : MonoBehaviour
+public class EnemyCharacterController : MonoBehaviour
 {
     public float speed;
     public float jumpPower;
