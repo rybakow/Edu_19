@@ -72,9 +72,9 @@ public class PlayerController : MonoBehaviour
     {
         if (collider.CompareTag("Door"))
         {
-            Debug.Log("Door");
-            anim.SetTrigger("DoorIn");
+            DoorController dc = collider.GetComponent<DoorController>();
+            if (dc.isItNextLevel || (!dc.isItNextLevel && dc.didExit))
+                anim.SetTrigger("DoorIn");
         }
-            
     }
 }

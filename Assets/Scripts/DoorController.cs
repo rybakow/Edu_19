@@ -2,11 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-    private Animator anim;
 
+    public bool isItNextLevel;
+    public bool didExit;
+    
+    private Animator anim;
+    
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -14,7 +19,22 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && ((isItNextLevel) || (!isItNextLevel && didExit)))
             anim.SetTrigger("DoorOpen");
+    }
+
+    public void LevelController()
+    {
+        if (isItNextLevel)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+            if (didExit)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+            didExit = true;
     }
 }
