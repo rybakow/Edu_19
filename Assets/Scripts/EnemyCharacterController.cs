@@ -12,7 +12,8 @@ public class EnemyCharacterController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
-
+    private bool startFlipX;
+    
     private float currentTime;
     private float lastPosition;
 
@@ -23,6 +24,7 @@ public class EnemyCharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        startFlipX = spriteRenderer.flipX;
     }
     
     void FixedUpdate()
@@ -84,12 +86,12 @@ public class EnemyCharacterController : MonoBehaviour
             if (directionDelta > 0)
             {
                 speed = 1;
-                spriteRenderer.flipX = false;
+                spriteRenderer.flipX = startFlipX;
             }
             else
             {
                 speed = -1;
-                spriteRenderer.flipX = true;
+                spriteRenderer.flipX = !startFlipX;
             }  
         }
             
