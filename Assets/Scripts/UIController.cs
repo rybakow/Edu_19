@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        levelNameText.text = SceneManager.GetActiveScene().name.ToString();
+        int levelN = SceneManager.GetActiveScene().buildIndex + 1;
+        levelNameText.text = "Уровень " + levelN;
     }
 }
