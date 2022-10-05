@@ -11,8 +11,13 @@ public class BombController : MonoBehaviour
     private float currentTime;
     private BombDamageController bombDamageController;
 
+    public AudioSource audioSource;
+    public AudioClip preparing;
+    public AudioClip exploision;
+
     private void Awake()
     {
+        PreparingSound();
         anim = GetComponent<Animator>();
         bombDamageController = GetComponent<BombDamageController>();
     }
@@ -35,5 +40,15 @@ public class BombController : MonoBehaviour
     public void destroyBomb()
     {
         Destroy(this.gameObject);
+    }
+
+    public void PreparingSound()
+    {
+        audioSource.PlayOneShot(preparing);
+    }
+
+    public void ExploisionSound()
+    {
+        audioSource.PlayOneShot(exploision);
     }
 }

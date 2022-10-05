@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject bomb;
 
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+    
     private int count;
     
     private void Start()
@@ -52,6 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, Vector2.up.y * jumpPower);
             groundController.onGround = false;
+            audioSource.PlayOneShot(jumpSound);
         }
         
         anim.SetBool("isJumping", !onGround);

@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-
+   
     public bool isItNextLevel;
     public bool didExit;
     
     private Animator anim;
+
+    public AudioSource audioSource;
+    public AudioClip openDoorSound;
     
     private void Awake()
     {
@@ -20,7 +23,10 @@ public class DoorController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player") && ((isItNextLevel) || (!isItNextLevel && didExit)))
+        {
+            audioSource.PlayOneShot(openDoorSound);
             anim.SetTrigger("DoorOpen");
+        }
     }
 
     public void LevelController()
