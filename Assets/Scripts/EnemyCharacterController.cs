@@ -19,6 +19,10 @@ public class EnemyCharacterController : MonoBehaviour
 
     public Transform target;
 
+    public AudioSource audioSource;
+    public AudioClip deadSound;
+    public AudioClip greetingSound;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -104,6 +108,17 @@ public class EnemyCharacterController : MonoBehaviour
 
     public void DestroyCharacter()
     {
+        GameState.enemyKilledCount += 1;
         Destroy(this.transform.parent.gameObject);
+    }
+
+    public void GreetingSound()
+    {
+        audioSource.PlayOneShot(greetingSound);
+    }
+
+    public void DeathSound()
+    {
+        audioSource.PlayOneShot(deadSound);
     }
 }

@@ -22,7 +22,11 @@ public class ViewRangeController : MonoBehaviour
    private void OnTriggerEnter2D(Collider2D collider)
    {
       if (collider.gameObject.CompareTag("Player"))
+      {
          characterController.target = collider.gameObject.transform;
+         characterController.GreetingSound();
+      }
+         
    }
 
    private void OnTriggerExit2D(Collider2D collider)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioClip jumpSound;
+    public AudioClip deathSound;
     
     private int count;
     
@@ -80,5 +82,15 @@ public class PlayerController : MonoBehaviour
             if (dc.isItNextLevel || (!dc.isItNextLevel && dc.didExit))
                 anim.SetTrigger("DoorIn");
         }
+    }
+
+    public void DeathSound()
+    {
+        audioSource.PlayOneShot(deathSound);
+    }
+    
+    public void RunResultScene()
+    {
+        SceneManager.LoadScene("ResultScene");
     }
 }

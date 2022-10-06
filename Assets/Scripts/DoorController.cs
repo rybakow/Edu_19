@@ -31,11 +31,18 @@ public class DoorController : MonoBehaviour
 
     public void LevelController()
     {
+        int actualSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
         if (isItNextLevel)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        {
+            if (actualSceneIndex + 1 > GameState.totalLevelsInGame)
+                SceneManager.LoadScene("ResultScene");
+            else 
+                SceneManager.LoadScene(actualSceneIndex + 1);
+        }
         else
             if (didExit)
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+                SceneManager.LoadScene(actualSceneIndex - 1);
     }
 
     private void OnTriggerExit2D(Collider2D collider)

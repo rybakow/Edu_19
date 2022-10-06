@@ -164,6 +164,7 @@ MonoBehaviour:
   bomb: {fileID: 0}
   audioSource: {fileID: 4573786063521481772}
   jumpSound: {fileID: 8300000, guid: 2f95b230f1e7bec46abce9d7ae3a2edb, type: 3}
+  deathSound: {fileID: 8300000, guid: b1888324c7c324d429e035529f7b48b8, type: 3}
 --- !u!114 &5562450405486872958
 MonoBehaviour:
   m_ObjectHideFlags: 0

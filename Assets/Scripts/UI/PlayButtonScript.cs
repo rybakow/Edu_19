@@ -7,6 +7,7 @@ public class PlayButtonScript : MonoBehaviour
 {
     public void OnPlayButton()
     {
+        GameState.SetDefault();
         SceneManager.LoadScene(0);
     }
 }
