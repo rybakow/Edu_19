@@ -12,20 +12,31 @@ public class ElevatorController : MonoBehaviour
     
     private Transform target;
 
-    public void MovePlatform(bool up)
+    public bool movingPlatform;
+    
+    public void MovePlatform()
     {
-        if (up)
-            target = topPoint.transform;
+        if (movingPlatform)
+            if (target)
+            {
+                platform.transform.position = Vector2.MoveTowards(platform.transform.position, target.position, Time.deltaTime);
+                
+                if (platform.transform.position.y == topPoint.transform.position.y)
+                    target = bottomPoint.transform;
+                else if (platform.transform.position.y == bottomPoint.transform.position.y)
+                    target = topPoint.transform;
+            }
+            else
+                target = topPoint.transform;
         else
-            target = bottomPoint.transform;
+        {
+            platform.transform.position =
+                Vector2.MoveTowards(platform.transform.position, bottomPoint.transform.position, Time.deltaTime);
+        }
     }
 
     private void Update()
     {
-        if (target)
-            platform.transform.position = Vector2.MoveTowards(platform.transform.position, target.position, Time.deltaTime);
-        
-        if (platform.transform.position.y == target.transform.position.y)
-            MovePlatform(false);
+        MovePlatform();
     }
 }

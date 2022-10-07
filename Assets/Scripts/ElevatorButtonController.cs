@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ElevatorButtonController : MonoBehaviour
 {
-    private bool buttonPressed;
-    private float currentTime;
-
     private Animator anim;
 
     public AudioSource audioSource;
@@ -22,29 +19,27 @@ public class ElevatorButtonController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.name);
+        if (collider.CompareTag("Player") || collider.CompareTag("ActiveInventory"))
+            audioSource.PlayOneShot(buttonPressedSound);
+    }
+
+    private void OnTriggerStay2D(Collider2D collider)
+    {
         if (collider.CompareTag("Player") || collider.CompareTag("ActiveInventory"))
         {
-            buttonPressed = true;
+            elevatorController.movingPlatform = true;
             anim.SetBool("buttonPressed", true);
+        }
+    }
+    
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player") || collider.CompareTag("ActiveInventory"))
+        {
+            elevatorController.movingPlatform = false;
+            anim.SetBool("buttonPressed", false);
             audioSource.PlayOneShot(buttonPressedSound);
-            elevatorController.MovePlatform(true);
         }
     }
 
-    private void Update()
-    {
-        if (buttonPressed)
-        {
-            currentTime += Time.deltaTime;
-            
-            if (currentTime > 3f)
-            {
-                buttonPressed = false;
-                currentTime = 0;
-                anim.SetBool("buttonPressed", false);
-                audioSource.PlayOneShot(buttonPressedSound);
-            }
-        }
-    }
 }
