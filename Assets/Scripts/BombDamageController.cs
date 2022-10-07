@@ -14,7 +14,7 @@ public class BombDamageController : MonoBehaviour
     public void takeDamage(Transform epicenter)
     {
         Collider2D[] listOfDamageable = getCollidersInCircle(epicenter);
-
+        
         for (int i = 0; i < listOfDamageable.Length; i++)
         {
             GameObject damagedObject = listOfDamageable[i].gameObject;

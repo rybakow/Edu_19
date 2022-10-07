@@ -7,7 +7,7 @@ public class GameState : MonoBehaviour
     public static int enemyKilledCount;
     public static int coinsCount;
 
-    public static int totalLevelsInGame = 2;
+    public static int totalLevelsInGame = 3;
 
     public static void SetDefault()
     {
